@@ -1,0 +1,15 @@
+{
+  "name": "adapt-kcc-fileUpload",
+  "version": "0.0.1",
+  "framework": ">=5",
+  "description": "Please enter a description of your component here.",
+  "main": "/js/adapt-kcc-fileUpload.js",
+  "authors": [
+    "Your Name <your.email@example.org>"
+  ],
+  "keywords": [
+    "adapt-plugin",
+    "adapt-component"
+  ],
+  "license": "GPLv3"
+}

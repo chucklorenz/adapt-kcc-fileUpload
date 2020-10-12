@@ -1,0 +1,18 @@
+{
+  "name": "adapt-contrib-componentName",
+  "version": "0.0.1",
+  "description": "Description of your component",
+  "main": "",
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adaptlearning/adapt-contrib-componentName.git"
+  },
+  "author": "AdaptLearning",
+  "license": "GPL v3",
+  "bugs": {
+    "url": "https://github.com/adaptlearning/adapt-contrib-componentName/issues"
+  }
+}
