@@ -2,7 +2,9 @@
   "name": "adapt-kcc-fileUpload",
   "version": "0.0.1",
   "framework": ">=5",
-  "description": "Please enter a description of your component here.",
+  "component": "fileupload",
+  "displayName": "File Upload",
+  "description": "A component that uploads files to the server.",
   "main": "/js/adapt-kcc-fileUpload.js",
   "authors": [
     "Your Name <your.email@example.org>"

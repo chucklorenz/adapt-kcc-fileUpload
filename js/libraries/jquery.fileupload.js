@@ -1,4 +1,4 @@
-/*
+ /*
  * jQuery File Upload Plugin
  * https://github.com/blueimp/jQuery-File-Upload
  *
@@ -14,12 +14,17 @@
 
 (function (factory) {
   'use strict';
+
   if (typeof define === 'function' && define.amd) {
+    /* CL MOD:
+    This line was modified to reflect the location of the file:
+     define(['jquery','jquery-ui/ui/widget'], factory);
+     */
     // Register as an anonymous AMD module:
-    define(['jquery', 'jquery-ui/ui/widget'], factory);
+    define(['jquery', 'libraries/vendor/jquery.ui.widget'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS:
-    factory(require('jquery'), require('libraries/vendor/jquery.ui.widget'));
+    factory(require('jquery'), require('./vendor/jquery.ui.widget'));
   } else {
     // Browser globals:
     factory(window.jQuery);

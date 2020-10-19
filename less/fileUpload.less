@@ -1,0 +1,113 @@
+.fileupload {
+  .row {
+    margin-right: -15px;
+    margin-left: -15px;
+
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  &-controls {
+    padding: @item-padding;
+    background-color: @item-color;
+    color: @font-color;
+    border-radius: @item-border-radius;
+
+    span {
+      line-height: 1.15;
+    }
+
+    .no-touch &:hover {
+      background-color: @item-color-hover;
+      color: @font-color;
+      .transition(background-color @duration ease-in, color @duration ease-in;);
+    }
+  }
+
+  span.fileinput-button {
+    position: relative;
+    cursor: pointer;
+    text-transform: none;
+    overflow: visible;
+    display: inline;
+  }
+
+  .fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    //font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+  }
+
+  .btn-success {
+    background-color: @item-color;
+    color: @item-color-inverted;
+    border-color: @item-color;
+  }
+
+  .btn-primary {
+    background-color: @item-color;
+    color: @item-color-inverted;
+    border-color: @item-color;
+
+    .no-touch &:hover {
+      background-color: @item-color-hover;
+      color: @item-color-inverted-hover;
+      .transition(background-color @duration ease-in, color @duration ease-in;);
+    }
+  }
+
+  .btn-warning {
+    color: #fff;
+    background-color: @item-color;
+    border-color: @item-color;
+
+    .no-touch &:hover {
+      background-color: @item-color-hover;
+      color: @item-color-inverted-hover;
+      .transition(background-color @duration ease-in, color @duration ease-in;);
+    }
+  }
+
+  .btn-danger {
+    color: #fff;
+    background-color: @item-color;
+    border-color: @item-color;
+
+    .no-touch &:hover {
+      background-color: @item-color-hover;
+      color: @item-color-inverted-hover;
+      .transition(background-color @duration ease-in, color @duration ease-in;);
+    }
+  }
+
+  .glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .glyphicon-plus:before {
+    content: "\002b";
+    box-sizing: border-box;
+  }
+
+  .glyphicon-upload:before {
+    content: "\e027";
+    box-sizing: border-box;
+  }
+}

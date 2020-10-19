@@ -1,4 +1,13 @@
-define([
+import Adapt from 'core/js/adapt';
+import FileUploadModel from './fileUploadModel';
+import FileUploadView from './fileUploadView';
+
+export default Adapt.register('fileupload', {
+  model: FileUploadModel,
+  view: FileUploadView
+});
+
+/* define([
     "core/js/adapt",
     "core/js/views/componentView"
 ], function(Adapt, ComponentView) {
@@ -26,22 +35,8 @@ define([
         }
 
     }, {
-        template: "adapt-kcc-fileUpload"
+        template: "fileUpload"
     });
 
     return Adapt.register("adapt-kcc-fileUpload", FileUpload);
-});
-
-/*
-define([
-    'core/js/adapt',
-    './hotgraphicView',
-    'core/js/models/itemsComponentModel'
-], function(Adapt, HotgraphicView, ItemsComponentModel) {
-
-    return Adapt.register('hotgraphic', {
-        model: ItemsComponentModel.extend({}),
-        view: HotgraphicView
-    });
-
 });*/
