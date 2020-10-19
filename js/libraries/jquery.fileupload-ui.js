@@ -633,7 +633,7 @@
           filesList.find('.cancel').trigger('click');
         }
       });
-      this._on(fileUploadButtonBar.find('.delete'), {
+      /*this._on(fileUploadButtonBar.find('.delete'), {
         click: function (e) {
           e.preventDefault();
           filesList
@@ -643,14 +643,14 @@
             .trigger('click');
           fileUploadButtonBar.find('.toggle').prop('checked', false);
         }
-      });
-      this._on(fileUploadButtonBar.find('.toggle'), {
+      });*/
+      /*this._on(fileUploadButtonBar.find('.toggle'), {
         change: function (e) {
           filesList
             .find('.toggle')
             .prop('checked', $(e.currentTarget).is(':checked'));
         }
-      });
+      });*/
     },
 
     _destroyButtonBarEventHandlers: function () {

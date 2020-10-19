@@ -25,9 +25,9 @@ class FileUploadView extends ComponentView {
       url: this.model.get('url'),
       uploadTemplateId: null,
       downloadTemplateId: null,
-      uploadTemplate: function (data) {
+      uploadTemplate: function(data) {
         var rows = $();
-        $.each(data.files, function (index, file) {
+        $.each(data.files, function(index, file) {
           var row = $('<tr class="template-upload fade">' +
             '<td><span class="preview"></span></td>' +
             '<td><p class="name"></p>' +
@@ -53,18 +53,18 @@ class FileUploadView extends ComponentView {
         });
         return rows;
       },
-      downloadTemplate: function (result) {
+      downloadTemplate: function(result) {
         console.log('result:', result);
         var rows = $();
-        $.each(result.files, function (index, file) {
+        $.each(result.files, function(index, file) {
           var row = $('<tr class="template-download fade">' +
             '<td><span class="preview"></span></td>' +
             '<td><p class="name"></p>' +
             (file.error ? '<div class="error"></div>' : '') +
             '</td>' +
             '<td><span class="size"></span></td>' +
-            '<td><button class="fileupload-controls' +
-            ' delete">Delete</button></td>' +
+            /*'<td><button class="fileupload-controls' +
+            ' delete">Delete</button></td>' +*/
             '</tr>');
           row.find('.size').text(result.formatFileSize(file.size));
           if (file.error) {
@@ -108,20 +108,31 @@ class FileUploadView extends ComponentView {
       dataType: 'json',
       context: $('#fileupload')[0]
     })
-      .always(function () {
+      .always(function() {
         $(this).removeClass('fileupload-processing');
       })
-      .done(function (result) {
+      .done(function(result) {
         $(this)
           .fileupload('option', 'done')
           // eslint-disable-next-line new-cap
-          .call(this, $.Event('done'), { result: result });
+          .call(this, $.Event('done'), {result: result});
       });
 
     this.setReadyStatus();
     if (this.model.get('_setCompletionOn') !== 'inview') return;
     this.setupInviewCompletion();
   }
+
+  /**
+   * TODO CL: add prefixes to file upload name:
+   * date/time stamp
+   * user initials
+   * substitute name
+   */
+
+  /**
+   * TODO CL: scale uploaded image w maxDimension
+   */
 
   /*checkIfResetOnRevisit() {
     const isResetOnRevisit = this.model.get('_isResetOnRevisit');
@@ -130,9 +141,9 @@ class FileUploadView extends ComponentView {
     this.model.reset(isResetOnRevisit);
   }*/
 
- /* onClick(event) {
-    this.model.toggleItemsState($(event.currentTarget).parent().data('index'));
-  }*/
+  /* onClick(event) {
+     this.model.toggleItemsState($(event.currentTarget).parent().data('index'));
+   }*/
 
 }
 

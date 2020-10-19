@@ -32,7 +32,6 @@ export default function(model, view) {
         encType="multipart/form-data"
       >
         <div className="row fileupload-buttonbar">
-          <div>
             <span
               className={classes([
                 'fileupload-controls',
@@ -55,13 +54,12 @@ export default function(model, view) {
               <i className="glyphicon glyphicon-ban-circle"></i>
               <span>Cancel upload</span>
             </button>
-            <button type="button" className="fileupload-controls btn-danger delete">
+            {/*<button type="button" className="fileupload-controls btn-danger delete">
               <i className="glyphicon glyphicon-trash"></i>
               <span>Delete selected</span>
-            </button>
-            <input type="checkbox" class="toggle" />
+            </button>*/}
+            {/*<input type="checkbox" class="toggle" />*/}
             <span class="fileupload-process"></span>
-        </div>
         <div
            className={classes([
              'col-lg-5',
