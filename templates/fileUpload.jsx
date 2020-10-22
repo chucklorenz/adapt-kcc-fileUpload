@@ -63,21 +63,25 @@ export default function(model, view) {
         <div
            className={classes([
              'col-lg-5',
-             'fileupload-progress fade'
+             'fileupload-progress fade',
+             'fileupload__progress'
            ])}>
           <div
             className={classes([
               'progress',
-              'progress-striped active'
+              'progress-striped active',
+              'fileuploadprogress__indicator'
             ])}
             role="progressbar"
             aria-valuemin="0"
             aria-valuemax="100"
           >
+
           <div
             className={classes([
               'progress-bar',
-              'progress-bar-success'
+              'progress-bar-success',
+              'fileuploadprogress__indicator-bar'
             ])}
             style={{width: '0%'}}
           ></div>

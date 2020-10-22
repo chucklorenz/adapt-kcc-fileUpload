@@ -4,93 +4,15 @@ import 'libraries/jquery.fileupload-ui.js';
 
 class FileUploadView extends ComponentView {
 
-  preRender() {
-    /* this.listenTo(this.model.getChildren(), {
+  /*preRender() {
+    this.listenTo(this.model.getChildren(), {
       'change:_isActive': this.onItemsActiveChange,
       'change:_isVisited': this.onItemsVisitedChange,
       'all': this.changed
-    }); */
-  }
-
-  postRender() {
-    //console.log('$(\'#fileupload\'):', $('#fileupload'));
-
-    /*$('#fileupload').fileupload({
-      // Uncomment the following to send cross-domain cookies:
-      //xhrFields: {withCredentials: true},
-      url: this.model.get('url')
-    });*/
-
-    $('#fileupload').fileupload({
-      url: this.model.get('url'),
-      uploadTemplateId: null,
-      downloadTemplateId: null,
-      uploadTemplate: function(data) {
-        var rows = $();
-        $.each(data.files, function(index, file) {
-          var row = $('<tr class="template-upload fade">' +
-            '<td><span class="preview"></span></td>' +
-            '<td><p class="name"></p>' +
-            '<div class="error"></div>' +
-            '</td>' +
-            '<td><p class="size"></p>' +
-            '<div class="progress"></div>' +
-            '</td>' +
-            '<td>' +
-            (!index && !data.options.autoUpload ?
-              '<button class="fileupload-controls start"' +
-              ' disabled>Start</button>' : '') +
-            (!index ? '<button class="fileupload-controls' +
-              ' cancel">Cancel</button>' : '') +
-            '</td>' +
-            '</tr>');
-          row.find('.name').text(file.name);
-          row.find('.size').text(data.formatFileSize(file.size));
-          if (file.error) {
-            row.find('.error').text(file.error);
-          }
-          rows = rows.add(row);
-        });
-        return rows;
-      },
-      downloadTemplate: function(result) {
-        console.log('result:', result);
-        var rows = $();
-        $.each(result.files, function(index, file) {
-          var row = $('<tr class="template-download fade">' +
-            '<td><span class="preview"></span></td>' +
-            '<td><p class="name"></p>' +
-            (file.error ? '<div class="error"></div>' : '') +
-            '</td>' +
-            '<td><span class="size"></span></td>' +
-            /*'<td><button class="fileupload-controls' +
-            ' delete">Delete</button></td>' +*/
-            '</tr>');
-          row.find('.size').text(result.formatFileSize(file.size));
-          if (file.error) {
-            row.find('.name').text(file.name);
-            row.find('.error').text(file.error);
-          } else {
-            row.find('.name').append($('<a></a>').text(file.name));
-            if (file.thumbnailUrl) {
-              row.find('.preview').append(
-                $('<a></a>').append(
-                  $('<img>').prop('src', file.thumbnailUrl)
-                )
-              );
-            }
-            row.find('a')
-              .attr('data-gallery', '')
-              .prop('href', file.url);
-            row.find('button.delete')
-              .attr('data-type', file.delete_type)
-              .attr('data-url', file.delete_url);
-          }
-          rows = rows.add(row);
-        });
-        return rows;
-      }
     });
+  }*/
+  postRender() {
+    $('#fileupload').fileupload(this.model.get('_options'));
 
     // Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
@@ -115,7 +37,30 @@ class FileUploadView extends ComponentView {
         $(this)
           .fileupload('option', 'done')
           // eslint-disable-next-line new-cap
-          .call(this, $.Event('done'), {result: result});
+          .call(this, $.Event('done'), { result: result });
+      });
+
+    $('#fileupload')
+      .on('fileuploaddone', function (e, data) {
+        // for successful server response: success and returned error response
+
+        console.log('data: ', data);
+        console.log('data.result: ', data.result);
+        console.log('data.textStatus: ', data.textStatus);
+        console.log('data.jqXHR: ', data.jqXHR);
+
+        if (data.status === 200) {
+          // process upload success
+        } else {
+          // report error message
+        }
+      })
+      .on('fileuploadfail', function (e, data) {
+        // for unsuccessful server response
+
+        // data.errorThrown
+        // data.textStatus;
+        // data.jqXHR;
       });
 
     this.setReadyStatus();
@@ -124,15 +69,51 @@ class FileUploadView extends ComponentView {
   }
 
   /**
+   * TODO CL: "_setCompletionOn":
+   * "_comment": "_setCompletionOn = inview | uploaded",
+   * "_setCompletionOn": "uploaded",
+   * reference Media
+   */
+
+  /**
    * TODO CL: add prefixes to file upload name:
    * date/time stamp
    * user initials
    * substitute name
+   * https://github.com/blueimp/jQuery-File-Upload/wiki/API
    */
 
   /**
    * TODO CL: scale uploaded image w maxDimension
+   * https://github.com/blueimp/jQuery-File-Upload/wiki/Client-side-Image-Resizing
+   * https://github.com/blueimp/jQuery-File-Upload/wiki/Orientation
    */
+
+  /**
+   * TODO CL: accept images from camera with 'capture'
+   */
+
+  /**
+   * TODO CL: establish categories to restrict uploading file types:
+   * images, docs, video, audio
+   */
+
+  /**
+   * TODO CL: allow for multiple upload widgets on the same page
+   * https://github.com/blueimp/jQuery-File-Upload/wiki/Multiple-File-Upload-Widgets-on-the-same-page
+   */
+
+  /**
+   * TODO CL: restore uploaded file name and date/timestamp on revisit
+   * reference Matching's storeUserAnswer function
+   */
+
+
+  /**
+   * TODO CL: minify javascript files
+   * https://github.com/blueimp/jQuery-File-Upload/wiki/Performance-Optimizations#javascript-minification
+   */
+
 
   /*checkIfResetOnRevisit() {
     const isResetOnRevisit = this.model.get('_isResetOnRevisit');
