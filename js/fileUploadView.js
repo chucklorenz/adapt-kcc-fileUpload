@@ -37,11 +37,11 @@ class FileUploadView extends ComponentView {
         $(this)
           .fileupload('option', 'done')
           // eslint-disable-next-line new-cap
-          .call(this, $.Event('done'), { result: result });
+          .call(this, $.Event('done'), {result: result});
       });
 
     $('#fileupload')
-      .on('fileuploaddone', function (e, data) {
+      .on('fileuploaddone', function(e, data) {
         // for successful server response: success and returned error response
 
         console.log('data: ', data);
@@ -55,7 +55,7 @@ class FileUploadView extends ComponentView {
           // report error message
         }
       })
-      .on('fileuploadfail', function (e, data) {
+      .on('fileuploadfail', function(e, data) {
         // for unsuccessful server response
 
         // data.errorThrown
@@ -81,12 +81,6 @@ class FileUploadView extends ComponentView {
    * user initials
    * substitute name
    * https://github.com/blueimp/jQuery-File-Upload/wiki/API
-   */
-
-  /**
-   * TODO CL: scale uploaded image w maxDimension
-   * https://github.com/blueimp/jQuery-File-Upload/wiki/Client-side-Image-Resizing
-   * https://github.com/blueimp/jQuery-File-Upload/wiki/Orientation
    */
 
   /**

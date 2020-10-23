@@ -137,6 +137,9 @@
                 if (error) {
                   $(this).find('.error').text(error);
                 }
+                //CL mod
+                $(this).find('button.start').addClass('is-disabled');
+                $(this).find('button.start').prop('disabled', true);
               });
             }
           });

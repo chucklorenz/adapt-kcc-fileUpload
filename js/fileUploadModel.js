@@ -16,6 +16,8 @@ export default class FileUploadModel extends ComponentModel {
   }
 
   consolidateOptions() {
+    // options are seperated at beginning to facilitate categorization
+    // within the properties.schema
     const basicOpts = this.get('_basicOptions');
     const genOpts = this.get('_generalOptions');
     const proImageOpts = this.get('_processingImageOptions');
@@ -41,7 +43,7 @@ export default class FileUploadModel extends ComponentModel {
             '<td>' +
             (!index && !data.options.autoUpload ?
               '<button class="fileupload-controls start"' +
-              ' disabled>Start</button>' : '') +
+              '>Start</button>' : '') +
             (!index ? '<button class="fileupload-controls' +
               ' cancel">Cancel</button>' : '') +
             '</td>' +
@@ -50,6 +52,7 @@ export default class FileUploadModel extends ComponentModel {
           row.find('.size').text(data.formatFileSize(file.size));
           if (file.error) {
             row.find('.error').text(file.error);
+            row.find('.start').prop('disabled', true);
           }
           rows = rows.add(row);
         });
@@ -97,8 +100,40 @@ export default class FileUploadModel extends ComponentModel {
     var _options = {};
 
     _.extend(_options, basicOpts, genOpts, genOpts, proImageOpts, proAudioOpts, proVideoOpts, valOpts, templateOptions);
-    // remove props with value='' to preserve code defaults
-    _options = _.pick(_options, _.identity);
+
+    // remove opts with value='' to preserve code defaults
+    let deleteOpts = _.pick(_options, function (value) {
+      return value === '' || value === undefined || value === null;
+    });
+    _options = _.omit(_options, _.keys(deleteOpts));
+
+    // a) JSON strings arrive escaped, and
+    // b) jquery.fileupload-validate.js requires regex, not strings
+    this.unescapeRegex(_options, 'acceptFileTypes');
+    this.unescapeRegex(_options, 'loadImageFileTypes');
+    this.unescapeRegex(_options, 'loadAudioFileTypes');
+    this.unescapeRegex(_options, 'loadVideoFileTypes');
+
     this.set('_options', _options);
   }
+
+  unescapeRegex(object, string) {
+    if (!object[string]) return;
+
+    let match = /^\/(.*)\/([a-z]*)$/.exec(object[string]);
+    object[string] = new RegExp(match[1], match[2]);
+  }
+
+  /*unescapeRegex(object, string) {
+    if (!object[string]) return;
+    let unescapedString = object[string].replace(/\\(.)/g, function ($0, $1) {
+      return $1;
+    });
+    console.log('unescapedString: ', unescapedString);
+    let regexString = new RegExp(unescapedString);
+    console.log('regexString: ', regexString);
+    // remove leading and trailing /
+    object[string] = regexString;
+  }*/
+
 }

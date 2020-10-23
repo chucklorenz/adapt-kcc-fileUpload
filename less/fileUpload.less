@@ -25,6 +25,18 @@
       background-color: @item-color-hover;
       color: @font-color;
       .transition(background-color @duration ease-in, color @duration ease-in;);
+
+      &[disabled], &.is-disabled {
+        background-color: @disabled;
+        color: @disabled-inverted;
+        cursor: not-allowed;
+      }
+    }
+
+    &[disabled], &.is-disabled {
+      background-color: @disabled;
+      color: @disabled-inverted;
+      cursor: not-allowed;
     }
   }
 
