@@ -16,14 +16,14 @@ export default function(model, view) {
     <div
       className={classes([
       'component-inner',
-      'adapt-kcc-fileUpload-inner'
+      'fileupload-inner'
     ])}
     >
       {templates.component(model, view)}
       <div
            className={classes([
              'component-widget',
-             'adapt-kcc-fileUpload-widget'
+             'fileupload-widget'
            ])}></div>
       <form
         id="fileupload"

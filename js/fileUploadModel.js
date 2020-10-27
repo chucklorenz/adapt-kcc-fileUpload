@@ -4,14 +4,13 @@ export default class FileUploadModel extends ComponentModel {
 
   defaults() {
     return ComponentModel.resultExtend('defaults', {
-      _shouldCollapseItems: true,
-      _toggleSpeed: 200
+      _qtyFilesToUpload: 0,
+      _qtyFilesProcessedNoError: 0
     });
   }
 
   init() {
     ComponentModel.prototype.init.call(this);
-    console.log('this: ', this);
     this.consolidateOptions();
   }
 

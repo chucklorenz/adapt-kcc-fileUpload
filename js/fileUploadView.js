@@ -4,14 +4,9 @@ import 'libraries/jquery.fileupload-ui.js';
 
 class FileUploadView extends ComponentView {
 
-  /*preRender() {
-    this.listenTo(this.model.getChildren(), {
-      'change:_isActive': this.onItemsActiveChange,
-      'change:_isVisited': this.onItemsVisitedChange,
-      'all': this.changed
-    });
-  }*/
   postRender() {
+    const self = this;
+
     $('#fileupload').fileupload(this.model.get('_options'));
 
     // Enable iframe cross-domain access via redirect option:
@@ -41,26 +36,35 @@ class FileUploadView extends ComponentView {
       });
 
     $('#fileupload')
+      .on('fileuploadsend', function (e, data) {
+        console.log('++++++++++++++++++');
+        //console.log('data.getNumberOfFiles(): ', numFilesSent);
+        let qtyFilesToUpload = self.model.get('_qtyFilesToUpload');
+        //console.log('_qtyFilesToUpload before send: ', qtyFilesToUpload);
+        self.model.set('_qtyFilesToUpload', ++qtyFilesToUpload);
+        //console.log('_qtyFilesToUpload after send: ',
+        // self.model.get('_qtyFilesToUpload'));
+      })
       .on('fileuploaddone', function(e, data) {
         // for successful server response: success and returned error response
 
-        console.log('data: ', data);
-        console.log('data.result: ', data.result);
-        console.log('data.textStatus: ', data.textStatus);
-        console.log('data.jqXHR: ', data.jqXHR);
+        //console.log('e: ', e);
+        //console.log('data: ', data); //data = options
+        //console.log('data.result: ', data.result);
+        //console.log('data.textStatus: ', data.textStatus);
+        //console.log('data.jqXHR: ', data.jqXHR);
 
-        if (data.status === 200) {
-          // process upload success
-        } else {
-          // report error message
-        }
-      })
-      .on('fileuploadfail', function(e, data) {
-        // for unsuccessful server response
+        //let numFiles = data.getNumberOfFiles();
+        //console.log('getNumberOfFiles: ', numFiles);
 
-        // data.errorThrown
-        // data.textStatus;
-        // data.jqXHR;
+        let qtyFilesProcessedNoError = self.model.get('_qtyFilesProcessedNoError');
+        $.each(data.result.files, function(index, file) {
+          if (!file.error) {
+            self.model.set('_qtyFilesProcessedNoError', ++qtyFilesProcessedNoError);
+          }
+        });
+        console.log('_qtyFilesProcessedNoError after upload error/success: ', self.model.get('_qtyFilesProcessedNoError'));
+        self.checkCompletionStatus(e, data);
       });
 
     this.setReadyStatus();
@@ -68,12 +72,18 @@ class FileUploadView extends ComponentView {
     this.setupInviewCompletion();
   }
 
-  /**
-   * TODO CL: "_setCompletionOn":
-   * "_comment": "_setCompletionOn = inview | uploaded",
-   * "_setCompletionOn": "uploaded",
-   * reference Media
-   */
+  checkCompletionStatus(e, data) {
+    console.log('in checkCompletionStatus');
+    console.log('this.model.get(\'_minReqUploads\'): ', this.model.get('_minReqUploads'));
+    console.log('completed data: ', data);
+    if (this.model.get('_setCompletionOn') === 'inview') return;
+    //if (data.getNumberOfFiles() < this.model.get('_minReqUploads')) return;
+    if (this.model.get('_qtyFilesProcessedNoError') < this.model.get('_minReqUploads')) return;
+    //console.log('originalFiles.length: ', numFiles);
+
+    //if (!this.areAllItemsCompleted()) return;
+    this.setCompletionStatus();
+  }
 
   /**
    * TODO CL: add prefixes to file upload name:
