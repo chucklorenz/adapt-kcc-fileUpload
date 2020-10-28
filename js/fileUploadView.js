@@ -36,8 +36,29 @@ class FileUploadView extends ComponentView {
       });
 
     $('#fileupload')
+      .on('fileuploadadd', function (e, data) {
+        //console.log('++++++++++++++++++');
+        var fileNamePrefix = '';
+        var userPrefix = '';
+        var dateTimePrefix = '';
+        if (self.model.get('enableUserInitialsPrefix')) {
+          userPrefix = self.getUserInitials();
+        }
+
+        if (self.model.get('enableDateTimePrefix')) {
+          dateTimePrefix = self.getDateTime();
+        }
+
+        fileNamePrefix = userPrefix + dateTimePrefix;
+        if (fileNamePrefix.trim() !== '') fileNamePrefix += '_';
+
+        let count = data.files.length;
+        for (let i = 0; i < count; i++) {
+          data.files[i].uploadName =
+            fileNamePrefix + data.files[i].name;
+        }
+      })
       .on('fileuploadsend', function (e, data) {
-        console.log('++++++++++++++++++');
         //console.log('data.getNumberOfFiles(): ', numFilesSent);
         let qtyFilesToUpload = self.model.get('_qtyFilesToUpload');
         //console.log('_qtyFilesToUpload before send: ', qtyFilesToUpload);
@@ -72,6 +93,27 @@ class FileUploadView extends ComponentView {
     this.setupInviewCompletion();
   }
 
+  getUserInitials() {
+    const _globals = this.model.get('_globals'),
+      fName = _globals._learnerInfo.firstname || '',
+      lName = _globals._learnerInfo.lastname || '',
+      uName = (fName.charAt(0) || '') + (lName.charAt(0) || '');
+    if (uName === '') console.log('User name was not available');
+    return uName.toUpperCase();
+  }
+
+  getDateTime() {
+    const d = new Date();
+    const year = d.getFullYear().toString().substr(2, 2),
+      month = this.pad((d.getMonth() + 1), 2).toString(),
+      day = this.pad(d.getDate(), 2).toString(),
+      hrs = this.pad(d.getHours(), 2).toString(),
+      mins = this.pad(d.getMinutes(), 2).toString(),
+      secs = this.pad(d.getSeconds(), 2).toString();
+
+    return year + month + day + ':' + hrs + ':' + mins + ':' + secs;
+  }
+
   checkCompletionStatus(e, data) {
     console.log('in checkCompletionStatus');
     console.log('this.model.get(\'_minReqUploads\'): ', this.model.get('_minReqUploads'));
@@ -81,8 +123,13 @@ class FileUploadView extends ComponentView {
     if (this.model.get('_qtyFilesProcessedNoError') < this.model.get('_minReqUploads')) return;
     //console.log('originalFiles.length: ', numFiles);
 
-    //if (!this.areAllItemsCompleted()) return;
     this.setCompletionStatus();
+  }
+
+  pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
   /**
@@ -91,6 +138,13 @@ class FileUploadView extends ComponentView {
    * user initials
    * substitute name
    * https://github.com/blueimp/jQuery-File-Upload/wiki/API
+   *  "_globals": {
+    "_learnerInfo": {
+      "id": "student.name@example.org",
+      "name": "Name, Student",
+      "firstname": "Student",
+      "lastname": "Name"
+    }
    */
 
   /**

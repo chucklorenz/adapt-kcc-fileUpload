@@ -47,7 +47,7 @@ export default class FileUploadModel extends ComponentModel {
               ' cancel">Cancel</button>' : '') +
             '</td>' +
             '</tr>');
-          row.find('.name').text(file.name);
+          row.find('.name').text(file.uploadName );
           row.find('.size').text(data.formatFileSize(file.size));
           if (file.error) {
             row.find('.error').text(file.error);
