@@ -4,7 +4,7 @@
 
 **File Upload** is a *presentation component* used with the [Adapt framework](https://github.com/adaptlearning/adapt_framework). 
 
-This component enables learners to upload files to the server. The component uses [jQuery-File-Upload (v10.31.0)](https://blueimp.github.io/jQuery-File-Upload/). [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/blob/master/LICENSE.txt) carries the MIT license compatible with Adapt.
+This component enables learners to upload files to the server. The component uses [jQuery-File-Upload (v10.31.0)](https://blueimp.github.io/jQuery-File-Upload/). [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/blob/master/LICENSE.txt) carries the MIT license compatible with Adapt. Nothing in this component addresses streaming.
 
 ## Installation
 

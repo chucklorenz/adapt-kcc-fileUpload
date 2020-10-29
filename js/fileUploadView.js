@@ -133,26 +133,19 @@ class FileUploadView extends ComponentView {
   }
 
   /**
-   * TODO CL: add prefixes to file upload name:
-   * date/time stamp
-   * user initials
-   * substitute name
-   * https://github.com/blueimp/jQuery-File-Upload/wiki/API
-   *  "_globals": {
-    "_learnerInfo": {
-      "id": "student.name@example.org",
-      "name": "Name, Student",
-      "firstname": "Student",
-      "lastname": "Name"
-    }
+   * TODO CL: implement v5 CSS classes
    */
 
   /**
-   * TODO CL: accept images from camera with 'capture'
+   * TODO CL: implement accessibility in jsx
    */
 
   /**
-   * TODO CL: establish categories to restrict uploading file types:
+   * TODO CL: implement drop zones in desktop
+   */
+
+  /**
+   * TODO CL: establish categories and accept to restrict uploading file types:
    * images, docs, video, audio
    */
 
@@ -162,10 +155,15 @@ class FileUploadView extends ComponentView {
    */
 
   /**
+   * TODO CL: allow file delete after upload
+   * add model config; toggle button visibility; decrement filesProcessed; and
+   * checkCompletionStatus
+   */
+
+  /**
    * TODO CL: restore uploaded file name and date/timestamp on revisit
    * reference Matching's storeUserAnswer function
    */
-
 
   /**
    * TODO CL: minify javascript files

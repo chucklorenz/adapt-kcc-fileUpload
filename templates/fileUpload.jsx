@@ -40,7 +40,7 @@ export default function(model, view) {
               ])}>
               <i className="glyphicon glyphicon-plus"></i>
               <span>Add files...</span>
-              <input type="file" name="files[]" data-url="server/php/" multiple/>
+              <input type="file" name="files[]" data-url="server/php/" multiple capture={data.allowCameraCapture} />
             </span>
             <button type="submit" className="fileupload-controls btn-primary start">
               <i className={classes([
