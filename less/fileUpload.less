@@ -9,7 +9,7 @@
     padding-left: 15px;
   }
 
-  &-controls {
+  &__controls {
     padding: @item-padding;
     background-color: @item-color;
     color: @font-color;
@@ -38,17 +38,24 @@
       color: @disabled-inverted;
       cursor: not-allowed;
     }
+
+    /*&.btn__add {}*/
+    /*&.btn__upload {}*/
+    /*&.btn__cancel {}*/
+    /*&.btn__delete {}*/
   }
 
-  span.fileinput-button {
+  span.fileinput__button {
     position: relative;
     cursor: pointer;
     text-transform: none;
-    overflow: visible;
-    display: inline;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1.15;
   }
 
-  .fileinput-button input {
+  .fileinput__button input {
     position: absolute;
     top: 0;
     right: 0;
@@ -61,49 +68,7 @@
     cursor: pointer;
   }
 
-  .btn-success {
-    background-color: @item-color;
-    color: @item-color-inverted;
-    border-color: @item-color;
-  }
-
-  .btn-primary {
-    background-color: @item-color;
-    color: @item-color-inverted;
-    border-color: @item-color;
-
-    .no-touch &:hover {
-      background-color: @item-color-hover;
-      color: @item-color-inverted-hover;
-      .transition(background-color @duration ease-in, color @duration ease-in;);
-    }
-  }
-
-  .btn-warning {
-    color: #fff;
-    background-color: @item-color;
-    border-color: @item-color;
-
-    .no-touch &:hover {
-      background-color: @item-color-hover;
-      color: @item-color-inverted-hover;
-      .transition(background-color @duration ease-in, color @duration ease-in;);
-    }
-  }
-
-  .btn-danger {
-    color: #fff;
-    background-color: @item-color;
-    border-color: @item-color;
-
-    .no-touch &:hover {
-      background-color: @item-color-hover;
-      color: @item-color-inverted-hover;
-      .transition(background-color @duration ease-in, color @duration ease-in;);
-    }
-  }
-
-  .glyphicon {
+  /*.glyphicon {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -113,16 +78,40 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
+  }*/
+
+  /*.icon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    //font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }*/
 
   .glyphicon-plus:before {
     content: "\002b";
     box-sizing: border-box;
   }
 
-  .glyphicon-upload:before {
-    content: "\e027";
+  .icon-add-to-list, .icon-upload,
+  .icon-block, .icon-delete {
+    font-size: 1rem;
+    /*font-family: 'Vanilla';
+    display: inline-block;
     box-sizing: border-box;
+    top: 1px;
+    position: relative;*/
+    &:before {
+      font-family: 'Vanilla';
+      display: inline-block;
+      box-sizing: border-box;
+      top: 1px;
+      position: relative;
+    }
   }
 }
 

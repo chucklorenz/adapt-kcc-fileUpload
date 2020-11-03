@@ -137,9 +137,6 @@
                 if (error) {
                   $(this).find('.error').text(error);
                 }
-                //CL mod
-                $(this).find('button.start').addClass('is-disabled');
-                $(this).find('button.start').prop('disabled', true);
               });
             }
           });
@@ -622,7 +619,8 @@
     },
 
     _initButtonBarEventHandlers: function () {
-      var fileUploadButtonBar = this.element.find('.fileupload-buttonbar'),
+      // CL mod: var fileUploadButtonBar = this.element.find('.fileupload-buttonbar'),
+      var fileUploadButtonBar = this.element.find('.fileupload__buttonbar'),
         filesList = this.options.filesContainer;
       this._on(fileUploadButtonBar.find('.start'), {
         click: function (e) {
@@ -659,11 +657,14 @@
     _destroyButtonBarEventHandlers: function () {
       this._off(
         this.element
-          .find('.fileupload-buttonbar')
+          // CL mod: .find('.fileupload-buttonbar')
+          .find('.fileupload__buttonbar')
           .find('.start, .cancel, .delete'),
         'click'
       );
-      this._off(this.element.find('.fileupload-buttonbar .toggle'), 'change.');
+      // CL mod: this._off(this.element.find('.fileupload-buttonbar .toggle'),
+      // 'change.');
+      this._off(this.element.find('.fileupload__buttonbar .toggle'), 'change.');
     },
 
     _initEventHandlers: function () {
@@ -685,7 +686,8 @@
 
     _enableFileInputButton: function () {
       this.element
-        .find('.fileinput-button input')
+        // CL mod: .find('.fileinput-button input')
+        .find('.fileinput__button input')
         .prop('disabled', false)
         .parent()
         .removeClass('disabled');
@@ -693,7 +695,8 @@
 
     _disableFileInputButton: function () {
       this.element
-        .find('.fileinput-button input')
+        // CL mod: .find('.fileinput-button input')
+        .find('.fileinput__button input')
         .prop('disabled', true)
         .parent()
         .addClass('disabled');

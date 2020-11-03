@@ -15,7 +15,7 @@
 @progress-bar-danger-bg: #c8102e;
 
 
-  // Bar animations
+// Bar animations
 // -------------------------
 
 // WebKit
@@ -39,10 +39,10 @@
   overflow: hidden;
   //height: @line-height-computed;
   margin-bottom: @line-height-computed;
- // background-color: @progress-bg;
+  // background-color: @progress-bg;
   background-color: @white;
   border-radius: @progress-border-radius;
-  .box-shadow(inset 0 1px 2px rgba(0,0,0,.1));
+  .box-shadow(inset 0 1px 2px rgba(0, 0, 0, .1));
 }
 
 // Bar of progress
@@ -55,7 +55,7 @@
   color: @progress-inverted;
   text-align: center;
   background-color: @progress-bar-bg;
-  .box-shadow(inset 0 -1px 0 rgba(0,0,0,.15));
+  .box-shadow(inset 0 -1px 0 rgba(0, 0, 0, .15));
   .transition(width .6s ease);
 }
 
@@ -127,6 +127,7 @@
     background-position: 0 0;
   }
 }
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0;

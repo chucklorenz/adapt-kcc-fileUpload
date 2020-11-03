@@ -4,8 +4,8 @@ export default class FileUploadModel extends ComponentModel {
 
   defaults() {
     return ComponentModel.resultExtend('defaults', {
-      _qtyFilesToUpload: 0,
-      _qtyFilesProcessedNoError: 0
+      _qtyFilesProcessedNoError: 0,
+      _qtyFilesFromAdd: 0
     });
   }
 
@@ -15,7 +15,7 @@ export default class FileUploadModel extends ComponentModel {
   }
 
   consolidateOptions() {
-    // options are seperated at beginning to facilitate categorization
+    // options are separated at beginning to facilitate categorization
     // within the properties.schema
     const basicOpts = this.get('_basicOptions');
     const genOpts = this.get('_generalOptions');
@@ -27,9 +27,9 @@ export default class FileUploadModel extends ComponentModel {
       uploadTemplateId: null,
       downloadTemplateId: null,
       uploadTemplate: function(data) {
-        var rows = $();
+        let rows = $();
         $.each(data.files, function(index, file) {
-          var row = $('<tr class="template-upload fade">' +
+          let row = $('<tr class="template-upload fade">' +
             '<td><span class="preview"></span></td>' +
             '<td><p class="name"></p>' +
             '<strong class="error text-danger"></strong>' +
@@ -41,13 +41,13 @@ export default class FileUploadModel extends ComponentModel {
             '</td>' +
             '<td>' +
             (!index && !data.options.autoUpload ?
-              '<button class="fileupload-controls start"' +
+              '<button class="fileupload__controls start"' +
               '>Start</button>' : '') +
-            (!index ? '<button class="fileupload-controls' +
+            (!index ? '<button class="fileupload__controls' +
               ' cancel">Cancel</button>' : '') +
             '</td>' +
             '</tr>');
-          row.find('.name').text(file.uploadName );
+          row.find('.name').text(file.uploadName);
           row.find('.size').text(data.formatFileSize(file.size));
           if (file.error) {
             row.find('.error').text(file.error);
@@ -58,23 +58,22 @@ export default class FileUploadModel extends ComponentModel {
         return rows;
       },
       downloadTemplate: function(result) {
-        var rows = $();
+        let rows = $();
         $.each(result.files, function(index, file) {
-          var row = $('<tr class="template-download fade">' +
+          let row = $('<tr class="template-download fade">' +
             '<td><span class="preview"></span></td>' +
             '<td><p class="name"></p>' +
             (file.error ? '<div class="error"></div>' : '') +
             '</td>' +
             '<td><span class="size"></span></td>' +
-            /*'<td><button class="fileupload-controls' +
+            /*'<td><button class="fileupload__controls' +
             ' delete">Delete</button></td>' +*/
             '</tr>');
           row.find('.size').text(result.formatFileSize(file.size));
           if (file.error) {
             row.find('.name').text(file.name);
             row.find('.error').text(file.error);
-          }
-          else {
+          } else {
             //row.find('.name').append($('<a></a>').text(file.name));
             row.find('.name').text(file.name);
             if (file.thumbnailUrl) {
@@ -96,12 +95,12 @@ export default class FileUploadModel extends ComponentModel {
         return rows;
       }
     };
-    var _options = {};
+    let _options = {};
 
     _.extend(_options, basicOpts, genOpts, genOpts, proImageOpts, proAudioOpts, proVideoOpts, valOpts, templateOptions);
 
     // remove opts with value='' to preserve code defaults
-    let deleteOpts = _.pick(_options, function (value) {
+    let deleteOpts = _.pick(_options, function(value) {
       return value === '' || value === undefined || value === null;
     });
     _options = _.omit(_options, _.keys(deleteOpts));
@@ -122,17 +121,4 @@ export default class FileUploadModel extends ComponentModel {
     let match = /^\/(.*)\/([a-z]*)$/.exec(object[string]);
     object[string] = new RegExp(match[1], match[2]);
   }
-
-  /*unescapeRegex(object, string) {
-    if (!object[string]) return;
-    let unescapedString = object[string].replace(/\\(.)/g, function ($0, $1) {
-      return $1;
-    });
-    console.log('unescapedString: ', unescapedString);
-    let regexString = new RegExp(unescapedString);
-    console.log('regexString: ', regexString);
-    // remove leading and trailing /
-    object[string] = regexString;
-  }*/
-
 }

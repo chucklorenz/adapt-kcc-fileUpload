@@ -37,10 +37,10 @@ class FileUploadView extends ComponentView {
 
     $('#fileupload')
       .on('fileuploadadd', function (e, data) {
-        //console.log('++++++++++++++++++');
-        var fileNamePrefix = '';
-        var userPrefix = '';
-        var dateTimePrefix = '';
+        let fileNamePrefix = '',
+          userPrefix = '',
+          dateTimePrefix = '';
+
         if (self.model.get('enableUserInitialsPrefix')) {
           userPrefix = self.getUserInitials();
         }
@@ -57,35 +57,26 @@ class FileUploadView extends ComponentView {
           data.files[i].uploadName =
             fileNamePrefix + data.files[i].name;
         }
-      })
-      .on('fileuploadsend', function (e, data) {
-        //console.log('data.getNumberOfFiles(): ', numFilesSent);
-        let qtyFilesToUpload = self.model.get('_qtyFilesToUpload');
-        //console.log('_qtyFilesToUpload before send: ', qtyFilesToUpload);
-        self.model.set('_qtyFilesToUpload', ++qtyFilesToUpload);
-        //console.log('_qtyFilesToUpload after send: ',
-        // self.model.get('_qtyFilesToUpload'));
+
+        let qtyFilesFromAdd = self.model.get('_qtyFilesFromAdd');
+        self.model.set('_qtyFilesFromAdd', ++qtyFilesFromAdd);
       })
       .on('fileuploaddone', function(e, data) {
-        // for successful server response: success and returned error response
-
-        //console.log('e: ', e);
-        //console.log('data: ', data); //data = options
-        //console.log('data.result: ', data.result);
-        //console.log('data.textStatus: ', data.textStatus);
-        //console.log('data.jqXHR: ', data.jqXHR);
-
-        //let numFiles = data.getNumberOfFiles();
-        //console.log('getNumberOfFiles: ', numFiles);
-
+        // for successful server response: both success and returned error
+        // response
         let qtyFilesProcessedNoError = self.model.get('_qtyFilesProcessedNoError');
+        let qtyFilesFromAdd = self.model.get('_qtyFilesFromAdd');
         $.each(data.result.files, function(index, file) {
           if (!file.error) {
             self.model.set('_qtyFilesProcessedNoError', ++qtyFilesProcessedNoError);
           }
         });
-        console.log('_qtyFilesProcessedNoError after upload error/success: ', self.model.get('_qtyFilesProcessedNoError'));
-        self.checkCompletionStatus(e, data);
+        self.model.set('_qtyFilesFromAdd', --qtyFilesFromAdd);
+        self.checkCompletionStatus();
+      })
+      .on('fileuploadfail', function (e, data) {
+        let qtyFilesFromAdd = self.model.get('_qtyFilesFromAdd');
+        self.model.set('_qtyFilesFromAdd', --qtyFilesFromAdd);
       });
 
     this.setReadyStatus();
@@ -114,14 +105,9 @@ class FileUploadView extends ComponentView {
     return year + month + day + ':' + hrs + ':' + mins + ':' + secs;
   }
 
-  checkCompletionStatus(e, data) {
-    console.log('in checkCompletionStatus');
-    console.log('this.model.get(\'_minReqUploads\'): ', this.model.get('_minReqUploads'));
-    console.log('completed data: ', data);
+  checkCompletionStatus() {
     if (this.model.get('_setCompletionOn') === 'inview') return;
-    //if (data.getNumberOfFiles() < this.model.get('_minReqUploads')) return;
     if (this.model.get('_qtyFilesProcessedNoError') < this.model.get('_minReqUploads')) return;
-    //console.log('originalFiles.length: ', numFiles);
 
     this.setCompletionStatus();
   }
@@ -134,6 +120,7 @@ class FileUploadView extends ComponentView {
 
   /**
    * TODO CL: implement v5 CSS classes
+   * mobile view
    */
 
   /**
@@ -169,19 +156,6 @@ class FileUploadView extends ComponentView {
    * TODO CL: minify javascript files
    * https://github.com/blueimp/jQuery-File-Upload/wiki/Performance-Optimizations#javascript-minification
    */
-
-
-  /*checkIfResetOnRevisit() {
-    const isResetOnRevisit = this.model.get('_isResetOnRevisit');
-    // If reset is enabled set defaults
-    if (!isResetOnRevisit) return;
-    this.model.reset(isResetOnRevisit);
-  }*/
-
-  /* onClick(event) {
-     this.model.toggleItemsState($(event.currentTarget).parent().data('index'));
-   }*/
-
 }
 
 FileUploadView.template = 'fileUpload.jsx';
