@@ -15,6 +15,28 @@
     "_comment": "_setCompletionOn = inview | upload",
     "_setCompletionOn": "inview",
     "_minReqUploads": 0,
+    "_buttons":{
+        "_addFile": {
+            "buttonText": "Add files...",
+            "ariaLabel": "Select here to choose files to upload."
+        },
+        "_uploadAll": {
+            "buttonText": "Start upload",
+            "ariaLabel": "Select here to upload all selected files."
+        },
+        "_cancelAll": {
+            "buttonText": "Cancel upload",
+            "ariaLabel": "Select here to remove selected files."
+        },
+        "_uploadThis": {
+            "buttonText": "Start",
+            "ariaLabel": "Select here to upload this particular file."
+        },
+        "_cancelThis": {
+            "buttonText": "Cancel",
+            "ariaLabel": "Select here to remove this particular file."
+        }
+    },
     "_basicOptions": {
         "url": "",
         "loadImageFileTypes": "",

@@ -17,8 +17,9 @@
     margin-left: 0.25rem;
     margin-right: 0.25rem;
 
-    span {
-      line-height: 1.15;
+    & span {
+      //line-height: 1.15;
+      //display: table-cell;
     }
 
     .no-touch &:hover {
@@ -45,8 +46,13 @@
     /*&.btn__delete {}*/
   }
 
-  span.fileinput__button {
+  label.fileinput__button {
     position: relative;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .fileinput__button span {
     cursor: pointer;
     text-transform: none;
     overflow: hidden;
@@ -119,11 +125,11 @@
 //----------------------------------
 .fileupload-processing .fileupload-process,
 .files .processing .preview {
-  //display: block;
-  //width: 32px;
-  //height: 32px;
+  display: block;
+  width: 32px;
+  height: 32px;
   background: url('assets/loading.gif') center no-repeat;
-  //background-size: contain;
+  background-size: contain;
 }
 
 .progress-animated .progress-bar,

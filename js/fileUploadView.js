@@ -16,27 +16,8 @@ class FileUploadView extends ComponentView {
       window.location.href.replace(/\/[^/]*$/, '/cors/result.html?%s')
     );
 
-    // Load existing files:
-    $('#fileupload').addClass('fileupload-processing');
-    $.ajax({
-      // Uncomment the following to send cross-domain cookies:
-      //xhrFields: {withCredentials: true},
-      url: $('#fileupload').fileupload('option', 'url'),
-      dataType: 'json',
-      context: $('#fileupload')[0]
-    })
-      .always(function() {
-        $(this).removeClass('fileupload-processing');
-      })
-      .done(function(result) {
-        $(this)
-          .fileupload('option', 'done')
-          // eslint-disable-next-line new-cap
-          .call(this, $.Event('done'), {result: result});
-      });
-
     $('#fileupload')
-      .on('fileuploadadd', function (e, data) {
+      .on('fileuploadadd', function(e, data) {
         let fileNamePrefix = '',
           userPrefix = '',
           dateTimePrefix = '';
@@ -49,8 +30,8 @@ class FileUploadView extends ComponentView {
           dateTimePrefix = self.getDateTime();
         }
 
-        fileNamePrefix = userPrefix + dateTimePrefix;
-        if (fileNamePrefix.trim() !== '') fileNamePrefix += '_';
+        fileNamePrefix = dateTimePrefix + userPrefix;
+        if (fileNamePrefix.trim() !== '') fileNamePrefix += '-';
 
         let count = data.files.length;
         for (let i = 0; i < count; i++) {
@@ -74,7 +55,7 @@ class FileUploadView extends ComponentView {
         self.model.set('_qtyFilesFromAdd', --qtyFilesFromAdd);
         self.checkCompletionStatus();
       })
-      .on('fileuploadfail', function (e, data) {
+      .on('fileuploadfail', function(e, data) {
         let qtyFilesFromAdd = self.model.get('_qtyFilesFromAdd');
         self.model.set('_qtyFilesFromAdd', --qtyFilesFromAdd);
       });
@@ -95,14 +76,15 @@ class FileUploadView extends ComponentView {
 
   getDateTime() {
     const d = new Date();
-    const year = d.getFullYear().toString().substr(2, 2),
+    //const year = d.getFullYear().toString().substr(2, 2),
+    const year = d.getFullYear().toString(),
       month = this.pad((d.getMonth() + 1), 2).toString(),
       day = this.pad(d.getDate(), 2).toString(),
       hrs = this.pad(d.getHours(), 2).toString(),
       mins = this.pad(d.getMinutes(), 2).toString(),
       secs = this.pad(d.getSeconds(), 2).toString();
 
-    return year + month + day + ':' + hrs + ':' + mins + ':' + secs;
+    return year + month + day + hrs + mins + secs;
   }
 
   checkCompletionStatus() {
@@ -118,9 +100,25 @@ class FileUploadView extends ComponentView {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
+  onKeyPress(event)
+  {
+    // 32:spacebar; 13: enter
+    if (event.which === 32 || event.which === 13) {
+      event.preventDefault();
+      $(event.currentTarget).next('input').trigger('click');
+    }
+  }
+
+  /**
+   * TODO CL: retrieve button title values from model
+   * mobile view
+   * consolidate less files
+   */
+
   /**
    * TODO CL: implement v5 CSS classes
    * mobile view
+   * consolidate less files
    */
 
   /**

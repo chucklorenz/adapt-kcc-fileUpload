@@ -17,6 +17,7 @@ export default class FileUploadModel extends ComponentModel {
   consolidateOptions() {
     // options are separated at beginning to facilitate categorization
     // within the properties.schema
+    const buttons = this.get('_buttons');
     const basicOpts = this.get('_basicOptions');
     const genOpts = this.get('_generalOptions');
     const proImageOpts = this.get('_processingImageOptions');
@@ -42,13 +43,17 @@ export default class FileUploadModel extends ComponentModel {
             '<td>' +
             (!index && !data.options.autoUpload ?
               '<button class="fileupload__controls start"' +
-              '>Start</button>' : '') +
+              '></button>' : '') +
             (!index ? '<button class="fileupload__controls' +
-              ' cancel">Cancel</button>' : '') +
+              ' cancel"></button>' : '') +
             '</td>' +
             '</tr>');
           row.find('.name').text(file.uploadName);
           row.find('.size').text(data.formatFileSize(file.size));
+          row.find('.start').text(buttons._uploadThis.buttonText)
+            .attr('aria-label', buttons._uploadThis.ariaLabel);
+          row.find('.cancel').text(buttons._cancelThis.buttonText)
+            .attr('aria-label', buttons._cancelThis.ariaLabel);
           if (file.error) {
             row.find('.error').text(file.error);
             row.find('.start').prop('disabled', true);
@@ -67,7 +72,7 @@ export default class FileUploadModel extends ComponentModel {
             '</td>' +
             '<td><span class="size"></span></td>' +
             /*'<td><button class="fileupload__controls' +
-            ' delete">Delete</button></td>' +*/
+            ' delete">buttons.deleteThis</button></td>' +*/
             '</tr>');
           row.find('.size').text(result.formatFileSize(file.size));
           if (file.error) {

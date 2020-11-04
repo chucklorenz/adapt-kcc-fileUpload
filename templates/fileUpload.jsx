@@ -1,12 +1,12 @@
 import Adapt from 'core/js/adapt';
-import {compile, classes, templates} from 'core/js/reactHelpers';
+import {compile, classes, html, templates} from 'core/js/reactHelpers';
 
 export default function(model, view) {
   const data = model.toJSON();
-  data._globals = Adapt.course.get('_globals');
+  const buttons = data._buttons;
 
   return (
-  /* CL: classes 'start', 'cancel', and 'delete' act as js hooks.
+  /* CL: classes 'start' and 'cancel' act as js hooks.
   They do not conform to Adapt format conventions in order to
   reduce modifications within blueimp fileupload js files. */
 
@@ -21,27 +21,34 @@ export default function(model, view) {
         encType="multipart/form-data"
       >
         <div className="row fileupload__buttonbar">
-          <span className='fileupload__controls fileinput__button btn__add'>
-            {/* <i className="icon icon-add-to-list"></i> */}
-            <span>Add files...</span>
+          <label htmlFor="chuck" className='fileinput__button'>
+            <span className='fileupload__controls btn__add'
+              role="button"
+              aria-label={buttons._addFile.ariaLabel}
+              tabIndex="0"
+              onKeyPress={(event) => view.onKeyPress(event)}
+            >
+              {html(compile(buttons._addFile.buttonText))}
+            </span>
             <input
+              id="chuck"
               type="file"
               name="files[]"
               data-url="server/php/"
               multiple
               capture={data.allowCameraCapture}
             />
-          </span>
+          </label>
           <button
             type="submit"
             className={classes([
               'fileupload__controls btn__upload start',
               (data._qtyFilesFromAdd === 0) && 'is-disabled'
             ])}
+            aria-label={buttons._uploadAll.ariaLabel}
             disabled={ data._qtyFilesFromAdd === 0}
           >
-            {/* <i className='icon icon-upload'></i> */}
-            <span>Start upload</span>
+            {html(compile(buttons._uploadAll.buttonText))}
           </button>
           <button
             type="reset"
@@ -49,23 +56,12 @@ export default function(model, view) {
               'fileupload__controls btn__cancel cancel',
               (data._qtyFilesFromAdd === 0) && 'is-disabled'
             ])}
+            aria-label={buttons._cancelAll.ariaLabel}
             disabled={ data._qtyFilesFromAdd === 0}
           >
-            {/*<button
-              type="button"
-              className="fileupload__controls btn__cancel cancel is-disabled"
-              disabled
-            >*/}
-            {/* <i className="icon icon-block"></i> */}
-            <span>Cancel upload</span>
+            {html(compile(buttons._cancelAll.buttonText))}
           </button>
-          {/* <button type="button" className="fileupload__controls
-           btn__delete delete is-disabled" disabled>
-            <i className="icon icon-delete"></i>
-            <span>Delete selected</span>
-          </button> */}
-          {/* <input type="checkbox" class="toggle" /> */}
-          <span class="fileupload-process"></span>
+          <span className="fileupload-process"></span>
           <div
             className='col-lg-5 fileupload-progress fade fileupload__progress'>
             <div
