@@ -21,7 +21,11 @@ export default function(model, view) {
         encType="multipart/form-data"
       >
         <div className="row fileupload__buttonbar">
-          <label htmlFor="chuck" className='fileinput__button'>
+          <label
+            id={`${data._id}-aria`}
+            htmlFor={`${data._id}-files[]`}
+            className='fileinput__button'
+          >
             <span className='fileupload__controls btn__add'
               role="button"
               aria-label={buttons._addFile.ariaLabel}
@@ -31,22 +35,22 @@ export default function(model, view) {
               {html(compile(buttons._addFile.buttonText))}
             </span>
             <input
-              id="chuck"
+              id={`${data._id}-files[]`}
               type="file"
               name="files[]"
               data-url="server/php/"
               multiple
               capture={data.allowCameraCapture}
+              aria-labelledby={`${data._id}-aria`}
             />
           </label>
           <button
             type="submit"
             className={classes([
-              'fileupload__controls btn__upload start',
-              (data._qtyFilesFromAdd === 0) && 'is-disabled'
+              'fileupload__controls btn__upload start'
             ])}
             aria-label={buttons._uploadAll.ariaLabel}
-            disabled={ data._qtyFilesFromAdd === 0}
+            disabled="disabled"
           >
             {html(compile(buttons._uploadAll.buttonText))}
           </button>
@@ -57,7 +61,7 @@ export default function(model, view) {
               (data._qtyFilesFromAdd === 0) && 'is-disabled'
             ])}
             aria-label={buttons._cancelAll.ariaLabel}
-            disabled={ data._qtyFilesFromAdd === 0}
+            disabled="disabled"
           >
             {html(compile(buttons._cancelAll.buttonText))}
           </button>
@@ -65,10 +69,11 @@ export default function(model, view) {
           <div
             className='col-lg-5 fileupload-progress fade fileupload__progress'>
             <div
-              className='progress progress-striped active fileuploadprogress__indicator'
+              className='progress active fileuploadprogress__indicator'
               role="progressbar"
               aria-valuemin="0"
               aria-valuemax="100"
+              aria-valuenow="0"
             >
               <div
                 className='progress-bar progress-bar-success fileuploadprogress__indicator-bar'

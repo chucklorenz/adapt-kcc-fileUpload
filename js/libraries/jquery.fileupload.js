@@ -24,7 +24,11 @@
     define(['jquery', 'libraries/vendor/jquery.ui.widget'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS:
+    /* CL MOD:
+   This line was modified to reflect the location of the file:
     factory(require('jquery'), require('./vendor/jquery.ui.widget'));
+    */
+    factory(require('jquery'), require('libraries/vendor/jquery.ui.widget'));
   } else {
     // Browser globals:
     factory(window.jQuery);

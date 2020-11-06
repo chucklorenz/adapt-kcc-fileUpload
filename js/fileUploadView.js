@@ -1,8 +1,24 @@
+import Adapt from 'core/js/adapt';
 import ComponentView from 'core/js/views/componentView';
 import 'libraries/jquery.fileupload.js';
 import 'libraries/jquery.fileupload-ui.js';
 
 class FileUploadView extends ComponentView {
+  preRender() {
+    this.listenTo(this.model, 'change:_qtyFilesFromAdd', this.onQtyFilesFromAddChanged);
+  }
+
+  onQtyFilesFromAddChanged(model) {
+    if (this.model.get('_qtyFilesFromAdd') > 0) {
+      // enable control buttons
+      Adapt.a11y.toggleAccessibleEnabled(this.$('.start'), true);
+      Adapt.a11y.toggleAccessibleEnabled(this.$('.cancel'), true);
+    } else {
+      // disable control buttons
+      Adapt.a11y.toggleAccessibleEnabled(this.$('.start'), false);
+      Adapt.a11y.toggleAccessibleEnabled(this.$('.cancel'), false);
+    }
+  }
 
   postRender() {
     const self = this;
